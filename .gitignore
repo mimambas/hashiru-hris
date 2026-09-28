@@ -1,0 +1,14 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+hris.db*
+*.db
+uploads/
+node_modules/
+.next/
+out/
+.env
+.env.local
+.DS_Store
+pgdata/

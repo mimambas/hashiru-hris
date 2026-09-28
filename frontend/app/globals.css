@@ -1,0 +1,190 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================================================
+   Hashiru HRIS — token desain (DESIGN.md §2)
+   Primitif oklch + token semantik. Komponen hanya memakai
+   token semantik via class Tailwind (bg-page, text-text, ...).
+   ============================================================ */
+:root {
+  /* Neutral ramp */
+  --zinc-50: oklch(0.985 0 0);
+  --zinc-100: oklch(0.97 0 0);
+  --zinc-200: oklch(0.92 0 0);
+  --zinc-300: oklch(0.87 0 0);
+  --zinc-400: oklch(0.71 0 0);
+  --zinc-500: oklch(0.55 0 0);
+  --zinc-600: oklch(0.44 0 0);
+  --zinc-700: oklch(0.37 0 0);
+  --zinc-800: oklch(0.27 0 0);
+  --zinc-900: oklch(0.21 0 0);
+  --zinc-950: oklch(0.13 0 0);
+
+  /* Accent ramp (brand) */
+  --brand-50: oklch(0.97 0.02 250);
+  --brand-100: oklch(0.93 0.04 252);
+  --brand-400: oklch(0.7 0.14 253);
+  --brand-500: oklch(0.62 0.15 254);
+  --brand-600: oklch(0.55 0.16 255);
+  --brand-700: oklch(0.48 0.15 256);
+  --brand-950: oklch(0.24 0.07 256);
+
+  /* Token semantik — light */
+  --bg-page: var(--zinc-50);
+  --bg-surface: oklch(1 0 0);
+  --bg-muted: var(--zinc-100);
+  --border: var(--zinc-200);
+  --text: var(--zinc-900);
+  --text-secondary: var(--zinc-600);
+  --text-tertiary: var(--zinc-500);
+  --accent: var(--brand-600);
+  --accent-hover: var(--brand-700);
+  --accent-soft: var(--brand-50);
+
+  --success: oklch(0.55 0.16 150);
+  --success-soft: oklch(0.95 0.03 150);
+  --success-text: oklch(0.45 0.14 150);
+
+  --warning: oklch(0.68 0.15 80);
+  --warning-soft: oklch(0.96 0.04 82);
+  --warning-text: oklch(0.5 0.13 75);
+
+  --danger: oklch(0.58 0.2 25);
+  --danger-soft: oklch(0.95 0.03 25);
+  --danger-text: oklch(0.5 0.17 25);
+
+  --info: oklch(0.6 0.14 235);
+  --info-soft: oklch(0.94 0.03 235);
+  --info-text: oklch(0.48 0.13 235);
+
+  /* Warna grafik (recharts) */
+  --chart-1: var(--brand-500);
+  --chart-2: oklch(0.62 0.14 235);
+  --chart-3: oklch(0.6 0.15 150);
+  --chart-4: oklch(0.72 0.15 80);
+  --chart-5: oklch(0.62 0.16 320);
+
+  color-scheme: light;
+}
+
+.dark {
+  /* Token semantik — dark */
+  --bg-page: var(--zinc-950);
+  --bg-surface: var(--zinc-900);
+  --bg-muted: var(--zinc-800);
+  --border: var(--zinc-800);
+  --text: var(--zinc-50);
+  --text-secondary: var(--zinc-400);
+  --text-tertiary: var(--zinc-500);
+  --accent: var(--brand-500);
+  --accent-hover: var(--brand-400);
+  --accent-soft: var(--brand-950);
+
+  --success: oklch(0.72 0.16 150);
+  --success-soft: oklch(0.26 0.06 150);
+  --success-text: oklch(0.78 0.14 150);
+
+  --warning: oklch(0.78 0.15 80);
+  --warning-soft: oklch(0.28 0.06 80);
+  --warning-text: oklch(0.82 0.13 80);
+
+  --danger: oklch(0.7 0.18 25);
+  --danger-soft: oklch(0.28 0.07 25);
+  --danger-text: oklch(0.78 0.15 25);
+
+  --info: oklch(0.72 0.13 235);
+  --info-soft: oklch(0.26 0.06 235);
+  --info-text: oklch(0.78 0.12 235);
+
+  --chart-1: var(--brand-400);
+  --chart-2: oklch(0.7 0.13 235);
+  --chart-3: oklch(0.7 0.15 150);
+  --chart-4: oklch(0.78 0.14 80);
+  --chart-5: oklch(0.7 0.15 320);
+
+  color-scheme: dark;
+}
+
+@layer base {
+  html {
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+  }
+
+  body {
+    @apply bg-page text-text font-sans text-sm;
+  }
+
+  /* Focus-visible: ring 2px accent, tidak pernah dihilangkan tanpa pengganti. */
+  :focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+
+  ::selection {
+    background: var(--accent-soft);
+    color: var(--text);
+  }
+
+  /* Scrollbar halus */
+  * {
+    scrollbar-width: thin;
+    scrollbar-color: var(--border) transparent;
+  }
+  *::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+  }
+  *::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 999px;
+  }
+  *::-webkit-scrollbar-track {
+    background: transparent;
+  }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
+
+  /* Matikan transisi sesaat saat ganti tema (dipakai ThemeProvider). */
+  .theme-switching,
+  .theme-switching *,
+  .theme-switching *::before,
+  .theme-switching *::after {
+    transition: none !important;
+  }
+}
+
+/* Angka nominal selalu tabular-nums (DESIGN.md §3) */
+@layer utilities {
+  .tnum {
+    font-variant-numeric: tabular-nums;
+  }
+}
+
+/* Recharts: font & angka konsisten dengan sistem */
+.recharts-wrapper,
+.recharts-tooltip-wrapper {
+  font-family: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Hormati prefers-reduced-motion: matikan slide/scale entrance. */
+@media (prefers-reduced-motion: reduce) {
+  .animate-fade-slide-in {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+  }
+}
